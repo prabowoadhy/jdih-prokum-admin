@@ -11,14 +11,14 @@
     <div class="content-wrapper">
         <div class="row same-height">
         <div class="col-md-8">
-            <form action="{{ route('update.prokum', ['id'=>$prokum->id]) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('updatestatus.prokum', ['id'=>$prokum->id]) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-floating mb-3">
-                    <input class="form-control" name="nama" id="nama" type="text" placeholder="" value="{{ $prokum->nama }}">
+                    <input class="form-control" name="nama" id="nama" type="text" placeholder="" value="{{ $prokum->nama }}" @role('kabag') disabled @endrole >
                     <label for="nama">Nama Produk Hukum</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <select id="tahun" name="tahun" class="form-select" aria-label="Default select example">
+                    <select id="tahun" name="tahun" class="form-select" aria-label="Default select example" @role('kabag') disabled @endrole >
                         @for ($i = date('Y'); $i >= date('Y') - 10; $i--)
                         <option value="{{ $i }}" @if ($i === $prokum->tahun) selected @endif >{{ $i }}</option>
                         @endfor
@@ -26,7 +26,7 @@
                     <label for="nama">Kategori</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <select id="id_kategori" name="id_kategori" class="form-select" aria-label="Default select example" >
+                    <select id="id_kategori" name="id_kategori" class="form-select" aria-label="Default select example" @role('kabag') disabled @endrole >
                         @foreach ($kategori as $p)
                         <option value="{{ $p->id }}" @if ($p->id === $prokum->id_kategori) selected @endif >{{ $p->nama_kategori }}</option>
                         @endforeach
@@ -43,11 +43,11 @@
                     <label for="nama">Status Dokumen Produk Hukum</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <textarea class="form-control" name="deskripsi" id="deskripsi" rows="3">{{ $prokum->deskripsi }}</textarea>
+                    <textarea class="form-control" name="deskripsi" id="deskripsi" rows="3" @role('kabag') disabled @endrole >{{ $prokum->deskripsi }}</textarea>
                     <label for="alamat">Deskripsi</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input class="form-control" name="file" id="file" type="file" value="{{ $prokum->nama_file }}">
+                    <input class="form-control" name="file" id="file" type="file" value="{{ $prokum->nama_file }}" @role('kabag') disabled @endrole >
                     <label for="file">File Prokum</label>
                     <a class="btn btn-danger btn-sm" href="{{ url($prokum->path_file) }}" alt="">Download FIle</a><br>
                 </div>

@@ -34,6 +34,15 @@
                     <label for="nama">Kategori</label>
                 </div>
                 <div class="form-floating mb-3">
+                    <select id="status" name="status" class="form-select" aria-label="Default select example">
+                        <option value="" selecte>--pilih status--</option>
+                        @foreach ($status as $a)
+                        <option value="{{ $a }}" @if ($a === old('status')) selected @endif >{{ $a }}</option>
+                        @endforeach
+                      </select>
+                    <label for="nama">Status Dokumen Produk Hukum</label>
+                </div>
+                <div class="form-floating mb-3">
                     <textarea class="form-control" name="deskripsi" id="deskripsi" rows="3">{{ old('deskripsi') }}</textarea>
                     <label for="alamat">Deskripsi</label>
                 </div>

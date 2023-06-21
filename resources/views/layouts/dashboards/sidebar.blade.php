@@ -10,7 +10,9 @@
         </a>
     </div>
     <div class="sidebar-header">
-        <div class="text">JDIH</div>
+        <div class="text">
+        <img src="{{ asset('assets/images/logo_magetan.png') }}" class="img img-fluid center" width="100vh">
+        </div>
         <div class="close-sidebar action-toggle">
             <i class="ti-close"></i>
         </div>
@@ -35,7 +37,7 @@
                     <span>Kategori</span>
                 </a>
             </li>
-            @can('read konfigurasi')
+            @can('read user')
             <li class="{{ request()->segment(1) == 'dashboard' && request()->segment(2) == 'konfigurasi' ? 'active open' : '' }}">
                 <a href="#" class="main-menu has-dropdown">
                     <i class="ti-desktop"></i>

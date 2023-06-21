@@ -45,7 +45,9 @@ Route::middleware('auth')->controller(ProkumController::class)->group(function()
     Route::get('/dashboard/prokum/create', 'create')->name('create.prokum');
     Route::post('/dashboard/prokum/store', 'store')->name('store.prokum');
     Route::get('/dashboard/prokum/edit/{id}', 'edit')->name('edit.prokum');
+    Route::get('/dashboard/prokum/ubah-status/{id}', 'show')->name('ubah-status.prokum');
     Route::post('/dashboard/prokum/update/{id}', 'update')->name('update.prokum');
+    Route::post('/dashboard/prokum/ubahstatus/{id}', 'UbahStatus')->name('updatestatus.prokum');
     Route::get('/dashboard/prokum/delete/{id}', 'destroy')->name('delete.prokum');
 });
 

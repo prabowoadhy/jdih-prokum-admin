@@ -17,6 +17,7 @@ class Produkhukum extends Model
         'id_kategori',
         'nama_file',
         'tahun',
+        'status',
         'path_file'
     ];
 

@@ -24,7 +24,6 @@ class ProdukHukumDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'produkhukum.action')
             ->addColumn('nama_kategori', function($prokum){
                 return $prokum->category->nama_kategori;
             })
@@ -33,8 +32,11 @@ class ProdukHukumDataTable extends DataTable
             })
             ->addColumn('action', function($row){
                 $action = '';
+                if(Gate::allows('update status prokum')){
+                    $action = '<a href="'.route('ubah-status.prokum', [ 'id' => $row->id ]).'" class="btn btn-primary btn-sm"><i class="fas fa-pen"></i>Ubah Status</a> ';
+                }
                 if(Gate::allows('read prokum')){
-                    $action = '<a href="'.asset($row->path_file).'" class="btn btn-sm btn-success"><i class="fas fa-download"></i></a> ';
+                    $action .= '<a href="'.asset($row->path_file).'" class="btn btn-sm btn-success"><i class="fas fa-download"></i></a> ';
                 }
                 if(Gate::allows('update prokum')){
                     $action .= '<a href="'.route('edit.prokum', [ 'id' => $row->id ]).'" class="btn btn-primary btn-sm"><i class="fas fa-pen"></i></a> ';
@@ -97,7 +99,7 @@ class ProdukHukumDataTable extends DataTable
             Column::make('nama'),
             Column::make('nama_kategori')->title('Ketegori'),
             Column::make('nama_file'),
-            Column::make('download'),
+            Column::make('status'),
             Column::make('action')
         ];
     }

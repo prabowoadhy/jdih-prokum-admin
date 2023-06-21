@@ -37,7 +37,8 @@ class ProkumController extends Controller
         $currentYear = date('Y');
         $startYear = $currentYear - 10;
         $data = [
-            'kategori' => KategoriProkum::all()
+            'kategori' => KategoriProkum::all(),
+            'status' => ['Berlaku', 'Dicabut', 'Mencabut', 'Diubah', 'Mengubah'],
         ];
         return view('dashboards.prokum.create', $data);
     }
@@ -54,6 +55,7 @@ class ProkumController extends Controller
             'nama' => 'required|unique:produkhukum,nama',
             'deskripsi' => 'required',
             'id_kategori' => 'required',
+            'status' => 'required',
             'file' => 'required|max:20024',
         ]);
         if (isset(Request()->file)) {
@@ -67,6 +69,7 @@ class ProkumController extends Controller
             'nama' => Request()->nama,
             'deskripsi' => Request()->deskripsi,
             'id_kategori' => Request()->id_kategori,
+            'status' => Request()->status,
             'nama_file' => $filename,
             'tahun' => Request()->tahun,
             'path_file' => 'file_prokum/'.$filename,
@@ -90,8 +93,10 @@ class ProkumController extends Controller
             'title' => 'Update Data',
             'url' => 'admin/updatedetail',
             'prokum' => Produkhukum::where('id', $id)->first(),
+            'kategori' => KategoriProkum::all(),
+            'status' => ['Berlaku', 'Dicabut', 'Mencabut', 'Diubah', 'Mengubah'],
         ];
-        return view('dashboard/prokum/edit', $data); 
+        return view('dashboards/prokum/edit-status', $data); 
     }
 
     /**
@@ -110,6 +115,7 @@ class ProkumController extends Controller
             'url' => 'admin/updatedetail',
             'prokum' => Produkhukum::where('id', $id)->first(),
             'kategori' => KategoriProkum::all(),
+            'status' => ['Berlaku', 'Dicabut', 'Mencabut', 'Diubah', 'Mengubah'],
         ];
         return view('dashboards.prokum.edit', $data); 
     }
@@ -136,6 +142,7 @@ class ProkumController extends Controller
                 'nama' => Request()->nama,
                 'deskripsi' => Request()->deskripsi,
                 'id_kategori' => Request()->id_kategori,
+                'status' => Request()->status,
                 'path_file' => 'file_prokum/'.$filename,
                 'nama_file' => $filename,
                 'tahun' => Request()->tahun,
@@ -145,9 +152,22 @@ class ProkumController extends Controller
                 'nama' => Request()->nama,
                 'deskripsi' => Request()->deskripsi,
                 'id_kategori' => Request()->id_kategori,
+                'status' => Request()->status,
                 'tahun' => Request()->tahun,
             ];
         } 
+        Produkhukum::updateOrCreate(['id' => $id],$data);
+        return redirect('/dashboard/prokum');
+    }
+
+    public function UbahStatus(Request $request, $id)
+    {
+        Request()->validate([
+            'status' => 'required',
+        ]);
+        $data = [
+            'status' => Request()->status,
+        ];
         Produkhukum::updateOrCreate(['id' => $id],$data);
         return redirect('/dashboard/prokum');
     }
